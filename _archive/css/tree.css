@@ -1,0 +1,68 @@
+html {
+	font-family: sans-serif;
+	color: #222;
+}
+body {
+	background: #eee;
+}
+button {
+	margin: 5px;
+	padding: 20px;
+	min-width:20%;
+	border:1px solid #aaa;
+	color: #555;
+	border-radius:10px;
+	font-size: 20px;
+	background: #fff;
+	transition: all 0.25s;
+}
+button:hover {
+	background: #fff;
+	transition: all 0.25s;
+	cursor: pointer;
+	border-color: #7BE1FF;
+	color: #7BE1FF;
+}
+
+button.no:hover {
+	border-color: #EF6B6B;
+	color: #EF6B6B;
+}
+button.yes:hover {
+	border-color: #69D27A;
+	color: #69D27A;
+}
+button.nav {
+	padding: 10px;
+}
+h1 {
+	font-size: 20px;
+}
+#main {
+	background: #fff;
+	border:1px solid #aaa;
+	border-radius: 10px;
+	width:80%;
+	margin: 50px auto 0;
+	padding:10px;
+	text-align:center;
+	box-shadow: 2px 2px 5px #777;
+}
+#icon {
+	background: url('../img/icon.png') no-repeat;
+	margin: 0 auto;
+	width: 50px;
+	height: 50px;
+	display: none;
+}
+#icon.question {
+	display:block;
+}
+#icon.end {
+	display:block;
+	background-position: 0px -50px;
+}
+.bottomBorder {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}

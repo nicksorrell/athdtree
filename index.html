@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tree Prototype</title>
+		<link href='css/bootstrap.min.css' rel='stylesheet'>
+		<link href='css/tree.css' rel='stylesheet'>
+		<script src='js/jquery-1.11.2.min.js'></script>
+		<script src='js/bootstrap.min.js'></script>
+		<script src='js/treeNodeData.js'></script>
+		<script src='js/treeEngine.js'></script>
+	</head>
+	<body>
+		<div id='main' class='container text-center well well-lg shadowed'>
+			<div class='row'>
+				<div class='col-xs-12'>
+					<h1 class='bottom-border'>
+						Army Distributed Learning Metrics Incident Determination
+					</h1>
+				</div>
+			</div>
+			<div class='row'>
+				<div class='col-xs-12'>
+					<button id='start' class='btn btn-primary btn-lg'>Start</button>
+					<i id="node-icon"></i>
+					<h2 id='title'>
+						<span></span>
+					</h2>
+					<div id='choices'></div>
+				</div>
+			</div>
+		</div>
+		<div id='history' class='container text-center well well-sm shadowed'>
+			<div class='row'>
+				<h3 class='bottom-border'>
+					Incident History
+				</h3>
+				<p class="msg">No saved incidents</p>
+			</div>
+		</div>
+		<script>
+			$(function() {
+				TREE.initView();
+				$('#start').click(function() { 
+					$(this).hide(); 
+					TREE.init(); 
+				});
+			});
+		</script>
+	</body>
+</html>

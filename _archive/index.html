@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tree Prototype</title>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/treeNodeData.js"></script>
+<script src="js/treeEngine.js"></script>
+<script>
+	$(function() {
+		$('#start').click(function() { 
+			$(this).hide(); 
+			TREE.init(); 
+		});
+	});
+</script>
+<link rel="stylesheet" href="css/tree.css">
+</head>
+<body>
+<div id="main">
+	<h1 class="bottomBorder">Army Distributed Learning Metrics Incident Determination</h1>
+	<button id="start">Start</button>
+	<div id="icon"></div>
+	<h2 id="title"></h2>
+	<div id="choices"></div>
+</div>
+</body>
+</html>

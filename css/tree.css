@@ -1,0 +1,40 @@
+body {
+	background: #eee;
+	padding-top: 50px;
+}
+
+h1 {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.shadowed {
+	box-shadow: 2px 2px 5px #777;
+}
+
+#node-icon{
+	color: #ccc;
+	font-size: 40px;
+	margin-top: 10px;
+}
+
+#title {
+	margin-top: 10px;
+}
+
+.bottom-border {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+.btn {
+	min-width: 25%;
+	padding: 10px;
+	margin: 5px;
+}
+
+#start, .btn.choice-btn {
+	padding: 20px;
+}
+.well {
+	background: #fff;
+}
