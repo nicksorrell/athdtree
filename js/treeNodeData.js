@@ -266,7 +266,7 @@ var ATHDNodes =
 	{
 		id: "2.5",
 		type: "question",
-		text: "Have you launched course?",
+		text: "Have you launched a course?",
 		choices: [
 			choice1 = {
 				text: "Yes",
