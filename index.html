@@ -21,6 +21,7 @@
 			<div class='row'>
 				<div class='col-xs-12'>
 					<button id='start' class='btn btn-primary btn-lg'>Start</button>
+					<h2 id='mode'><span></span></h2>
 					<i id="node-icon"></i>
 					<h2 id='title'>
 						<span></span>
@@ -35,11 +36,12 @@
 					Incident History
 				</h3>
 				<p class="msg">No saved incidents</p>
+				<div class="container"></div>
+				<button id="clear-history" class="btn btn-default btn-sm">Clear History</button>
 			</div>
 		</div>
 		<script>
 			$(function() {
-				TREE.initView();
 				$('#start').click(function() { 
 					$(this).hide(); 
 					TREE.init(); 

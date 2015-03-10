@@ -10,6 +10,7 @@ var TREE = (function(nodes){
 		historyIndex = 0, 
 		reviewMode = 0,
 		recordHistoryItems = 1,
+		saveHistory = 1,
 		debugMode = 0;
 	
 	var getChoiceType = function(choice) {
@@ -79,22 +80,82 @@ var TREE = (function(nodes){
 				}
 			}
 		},
-		
-		initView: function() {
-			if(!recordHistoryItems) {
-				$("#history").hide();
+
+		init: function(clearHistory) {
+			if(saveHistory) {
+				recordHistoryItems = true;
 			}
-		},
-		
-		init: function() {
 			for(var i = 0, numNodes = nodes.length; i < numNodes; i++) {
 				nodeList[nodes[i].id] = i;
 			}
+			
 			navHistory = [];
+			
 			try {
 				this.displayNode("1.0");				
 			} catch (e) {
-				return console.log("init() >> encountered a problem with the target node. (" + e + ")");
+				return this.debug.log("init() >> encountered a problem with the target node. (" + e + ")");
+			}
+			
+			if(recordHistoryItems) {
+				$("#history").css({"visibility" : "visible"});
+				if(saveHistory) {
+					this.showSavedHistory();
+				}
+			}
+		},
+		
+		reset: function(clearHistory){
+			if(clearHistory) {
+				pastTickets = [];
+				$("#history .container").html("");
+				$("#history .msg").html("No saved incidents");
+				$("#clear-history").css({"display" : "none"})	
+			} else {
+				$("#history .msg").html("");
+			}
+			
+			navHistory = [];
+			
+			$("#mode span").html("");
+			$("button.history-btn").removeClass("active");
+			
+			try {
+				this.displayNode("1.0");				
+			} catch (e) {
+				return this.debug.log("init() >> encountered a problem with the target node. (" + e + ")");
+			}
+			
+			$("#clear-history").css({"display" : "inline"}).on("click", function(){
+				TREE.reset(true);
+			});
+		},
+				
+		showSavedHistory: function() {
+			//if there are localStorageitems
+			if(localStorage.length > 0) {
+				//check to see if they are history items
+				for(var item in localStorage){
+					this.debug.log("showSavedHistory() >> Reading " + item + " from localStorage");
+					if(item.indexOf("history") == 0) {
+						//if so, read them in (create a button with the stored code and date, push the history to pastTickets)
+						var myNum = item.slice(-1);
+						this.debug.log("showSavedHistory() >> Using " + myNum + " as item number");
+						this.debug.log("showSavedHistory() >> createHistoryButon() info: " + this.readStoredHistory(myNum).dateTime);
+						this.createHistoryButton(myNum);
+						pastTickets.push(this.readStoredHistory(myNum).history);
+					}
+				}
+			}
+			
+			if(pastTickets.length > 0) {
+				$("#history .msg").html("");
+				
+				//Make the clear history button clear localStorage, pastTickets, and reset the view
+				$("#clear-history").css({"display" : "inline"}).on("click", function() {
+					localStorage.clear();
+					TREE.reset(true);
+				});
 			}
 		},
 		
@@ -118,7 +179,7 @@ var TREE = (function(nodes){
 				myNode = nodes[nodeList[nodeID]];
 				$('#title span').text(myNode.text);
 			} catch (e) {
-				return console.log("displayNode() >> couldn't read node title. (" + e + ")");
+				return this.debug.log("displayNode() >> couldn't read node title. (" + e + ")");
 			}
 			
 			$('#choices').html("");
@@ -141,7 +202,7 @@ var TREE = (function(nodes){
 					$('#node-icon').removeClass().addClass("glyphicon glyphicon-question-sign");
 				}
 			} catch (e) {
-				return console.log("displayNode() >> couldn't display question node choices. (" + e + ")");
+				return this.debug.log("displayNode() >> couldn't display question node choices. (" + e + ")");
 			}
 			
 			if(navHistory.length >= 1) {
@@ -160,18 +221,19 @@ var TREE = (function(nodes){
 					if(recordHistoryItems){
 						TREE.recordHistory();
 					}
-					TREE.init();
+					TREE.reset();
 				});
 			}
 		},
 		
 		reviewHistoryNode: function(historyItem, index) {
+			$("#mode span").html("Reviewing:");
 			try {
 				myNode = nodes[nodeList[historyItem[index][0]]];
 				myChoiceNum = historyItem[index][1];
 				$('#title span').text(myNode.text);
 			} catch (e) {
-				return console.log("reviewHistoryNode() >> couldn't read node title. (" + e + ")");
+				return this.debug.log("reviewHistoryNode() >> couldn't read node title. (" + e + ")");
 			}
 			
 			$('#choices').html("");
@@ -196,7 +258,7 @@ var TREE = (function(nodes){
 					$('#node-icon').removeClass().addClass("glyphicon glyphicon-pencil");
 				}
 			} catch (e) {
-				return console.log("displayNode() >> couldn't display question node choices. (" + e + ")");
+				return this.debug.log("displayNode() >> couldn't display question node choices. (" + e + ")");
 			}
 			
 			if(historyIndex > 0) {
@@ -217,19 +279,56 @@ var TREE = (function(nodes){
 			
 			$('#choices').append('<br/><button id="exitReview" class="btn btn-default">Exit Review</button>');
 			$('#exitReview').click(function(){
-				TREE.init();
+				reviewMode = 0;
+				TREE.reset();
 			});
 			
 		},
 		
 		recordHistory: function() {
-			$("#history .msg").html("");
+			if(saveHistory) {
+				localStorage.setItem("history" + localStorage.length, navHistory + "," + nodes[nodeList[currentNode]].code + "," + getDateTime());
+			}
 			pastTickets.push(navHistory);
-			var historyFragment = $("<button class='btn btn-sm btn-default history-btn' data-num=" + (pastTickets.length-1) + ">");
-			var historyButton = "<p class='lead'>" + nodes[nodeList[currentNode]].text.slice(7, 11) + " Incident</p><span>" + getDateTime() + "</span>";
+			
+			//Add a history button (not from saved history) to the list
+			this.createHistoryButton();
+		},
+		
+		readStoredHistory: function(itemNum) {
+			if(localStorage.getItem("history" + itemNum) != null) {
+				var historyData = localStorage.getItem("history" + itemNum).split(",");
+				var historyDateTime = historyData.pop();
+				var historyCode = historyData.pop();
+				var	parsedHistory = [],
+					numIterations = historyData.length / 2;
+					tempIndex0 = null,
+					tempIndex1 = null;
+				for(var i = 0; i < numIterations; i++){
+					tempIndex0 = historyData.shift();
+					tempIndex1 = historyData.shift();
+					parsedHistory.push([tempIndex0, tempIndex1]);
+				}
+				return {
+					dateTime: historyDateTime,
+					code: historyCode,
+					history: parsedHistory
+				};
+			}
+		},
+		
+		createHistoryButton: function(fromHistory) {
+			var historyBtnNum = (fromHistory) ? fromHistory : pastTickets.length - 1;
+			var historyBtnCode = (fromHistory) ? this.readStoredHistory(fromHistory).code : nodes[nodeList[currentNode]].code;
+			var historyBtnDateTime = (fromHistory) ? this.readStoredHistory(fromHistory).dateTime : getDateTime();
+			
+			var historyFragment = $("<button class='btn btn-sm btn-default history-btn' data-num=" + historyBtnNum + ">");
+			var historyButton = "<p class='lead'>" +historyBtnCode + " Incident</p><span>" + historyBtnDateTime + "</span>";
 			historyFragment.append(historyButton);
-			$('#history div').append(historyFragment);
+			$('#history .container').append(historyFragment);
 			$('button.history-btn').click(function() {
+				$("button.history-btn").removeClass("active");
+				$(this).addClass("active");
 				reviewMode = 1;
 				currentHistoryItem = pastTickets[$(this).data("num")];
 				historyIndex = 0;
