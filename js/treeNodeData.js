@@ -460,7 +460,7 @@ var ATHDNodes =
 	{
 		id: "4.2",
 		type: "question",
-		text: "Did the Forward/Next or Previous/Back buttons works?",
+		text: "Did the Forward/Next or Previous/Back buttons work?",
 		choices: [
 			choice1 = {
 				text: "Yes",
