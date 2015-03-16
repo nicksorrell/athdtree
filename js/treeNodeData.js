@@ -238,7 +238,7 @@ var ATHDNodes =
 			},
 			choice2 = {
 				text: "No",
-				targetNode: "2.4"
+				targetNode: "2.6"
 			}
 		]
 	},
@@ -281,7 +281,7 @@ var ATHDNodes =
 	{
 		id: "2.6",
 		type: "question",
-		text: "Were you trying to launch a course and the course would not launch?",
+		text: "Were you trying to launch a course that would not launch?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -333,7 +333,7 @@ var ATHDNodes =
 		id: "2.8.1",
 		type: "end",
 		code: "C5A",
-		text: "Record C5A Other Content Suggestion Incident, any enter learner suggestion in description"
+		text: "Record C5A Other Content Suggestion Incident, and enter learner suggestion in description"
 	},
 	//////SECTION B: Training (3.X)//////
 	{
@@ -603,22 +603,7 @@ var ATHDNodes =
 			},
 			choice2 = {
 				text: "No",
-				targetNode: "4.10"
-			}
-		]
-	},
-	{
-		id: "4.10",
-		type: "question",
-		text: "Did you encounter an issue with the instructional content in the course?",
-		choices: [
-			choice1 = {
-				text: "Yes",
 				targetNode: "9.0"
-			},
-			choice2 = {
-				text: "No",
-				targetNode: "9.7"
 			}
 		]
 	},
@@ -687,7 +672,7 @@ var ATHDNodes =
 		choices: [
 			choice1 = {
 				text: "Yes",
-				targetNode: "5.3"
+				targetNode: "5.4"
 			},
 			choice2 = {
 				text: "No",
@@ -840,7 +825,7 @@ var ATHDNodes =
 	{
 		id: "6.2",
 		type: "question",
-		text: "Was there no correct answer for the question?",
+		text: "Does this question have answers that cannot be selected?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -856,12 +841,12 @@ var ATHDNodes =
 		id: "6.2.1",
 		type: "end",
 		code: "C1B",
-		text: "Record C1B Content Assessment Questoin has No Correct Answer"
+		text: "Record C1B Content Assessment Questions have Inactive Answers"
 	},
 	{
 		id: "6.3",
 		type: "question",
-		text: "Was there no correct answer for the question?",
+		text: "Does this question have more than one correct answer?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -877,12 +862,12 @@ var ATHDNodes =
 		id: "6.3.1",
 		type: "end",
 		code: "C1D",
-		text: "Record C1D Content Assessment Question has No Correct Answer"
+		text: "Record C1D Content Assessment Question has Multiple Correct Answers"
 	},
 	{
 		id: "6.4",
 		type: "question",
-		text: "Was there no correct answer for the question?",
+		text: "Did the question have missing answers?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -898,13 +883,13 @@ var ATHDNodes =
 		id: "6.4.1",
 		type: "end",
 		code: "C1A",
-		text: "Record C1A Content Assessment Question has No Correct Answer"
+		text: "Record C1A Content Assessment Question has Answer Missing"
 	},
 	{
 		id: "6.4.2",
 		type: "end",
 		code: "C1H",
-		text: "Record C1H Content Assessment Question has No Correct Answer"
+		text: "Record C1H Content Assessment Other"
 	},
 	{
 		id: "6.5",
@@ -966,7 +951,7 @@ var ATHDNodes =
 	{
 		id: "6.8",
 		type: "question",
-		text: "Did the test say you passed, but your record shows unsuccessful, incomplete, or not evaluated for the test?",
+		text: "Did the test say you passed, and a passing status for the test is shown in your record, but your record is still in enrollments instead of your transcript?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -1008,7 +993,7 @@ var ATHDNodes =
 	{
 		id: "6.10",
 		type: "question",
-		text: "Was there no correct answer for the question?",
+		text: "Did the test say you passed, with a passing status for the test in your record, however, your record is still in enrollments and did not go to transcript?",
 		choices: [
 			choice1 = {
 				text: "Yes",
