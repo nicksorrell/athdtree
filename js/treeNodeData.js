@@ -1,5 +1,5 @@
-var ATHDNodes = 
-[	
+var ATHDNodes =
+[
 	//////START SECTION (1.X)//////
 	{
 		id: "1.0",
@@ -731,7 +731,7 @@ var ATHDNodes =
 	{
 		id: "5.5",
 		type: "question",
-		text: "Are you able to launch the course from your enrollments?",
+		text: "Do you have a problem with a test or assessment?",
 		choices: [
 			choice1 = {
 				text: "Yes",
