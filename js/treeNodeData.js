@@ -531,12 +531,33 @@ var ATHDNodes =
 			},
 			choice2 = {
 				text: "No",
-				targetNode: "4.5.1"
+				targetNode: "4.5a"
 			}
 		]
 	},
 	{
-		id: "4.5.1",
+		id: "4.5a",
+		type: "question",
+		text: "Were you attempting to re-enter the course?",
+		choices: [
+			choice1 = {
+				text: "Yes",
+				targetNode: "4.5a.1"
+			},
+			choice2 = {
+				text: "No",
+				targetNode: "4.5a.2"
+			}
+		]
+	},
+	{
+		id: "4.5a.1",
+		type: "end",
+		code: "N4G",
+		text: "Record N4G Bookmark Incident"
+	},
+	{
+		id: "4.5a.2",
 		type: "end",
 		code: "N4G",
 		text: "Record N4G Bookmark Incident"
