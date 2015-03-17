@@ -560,7 +560,7 @@ var ATHDNodes =
 		id: "4.5a.2",
 		type: "end",
 		code: "N4G",
-		text: "Record N4G Bookmark Incident"
+		text: "Record N4H Navigation Other Incident"
 	},
 	{
 		id: "4.6",
