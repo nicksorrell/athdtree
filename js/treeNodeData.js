@@ -739,7 +739,7 @@ var ATHDNodes =
 			},
 			choice2 = {
 				text: "No",
-				targetNode: "4.8"
+				targetNode: "4.0"
 			}
 		]
 	},
@@ -972,7 +972,7 @@ var ATHDNodes =
 	{
 		id: "6.8",
 		type: "question",
-		text: "Did the test say you passed, and a passing status for the test is shown in your record, but your record is still in enrollments instead of your transcript?",
+		text: "Did the test say you passed, but your record shows unsuccessful, incomplete, or not evaluated for the test?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -1035,7 +1035,7 @@ var ATHDNodes =
 	{
 		id: "6.11",
 		type: "question",
-		text: "Did the registration information say you have another test attempt but you ar enot able to take the assessment again?",
+		text: "Did the registration information say you have another test attempt but you are not able to take the assessment again?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -1447,13 +1447,13 @@ var ATHDNodes =
 		id: "9.8.1",
 		type: "end",
 		code: "C5A",
-		text: "Record C5A Content Suggestion"
+		text: "Record C5A Content Suggestion and enter learner suggestion in description"
 	},
 	{
 		id: "9.8.2",
 		type: "end",
 		code: "C5B",
-		text: "Record C5B Non-Content Suggestion"
+		text: "Record C5B Non-Content Suggestion and enter learner suggestion in description"
 	},
 	{
 		id: "9.9",
@@ -1473,11 +1473,11 @@ var ATHDNodes =
 	{
 		id: "9.9.1",
 		type: "end",
-		text: "Record N9A Content Suggestion"
+		text: "Record N9A Content Suggestion and enter learner suggestion in description"
 	},
 	{
 		id: "9.9.2",
 		type: "end",
-		text: "Record N9B Non-Content Other Incident"
+		text: "Record N9B Non-Content Other Incident and enter learner suggestion in description"
 	}
 ];
