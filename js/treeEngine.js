@@ -10,7 +10,7 @@ var TREE = (function(nodes){
 		historyIndex = 0, 
 		reviewMode = 0,
 		recordHistoryItems = 1,
-		saveHistory = 1,
+		saveHistory = 0,
 		debugMode = 0;
 	
 	var getChoiceType = function(choice) {
@@ -33,6 +33,26 @@ var TREE = (function(nodes){
 			((timeNow.getMinutes() < 10) ? "0" : "") +timeNow.getMinutes() + ":" + 
 			((timeNow.getSeconds() < 10) ? "0" : "") + timeNow.getSeconds();
 	};
+	
+	var getCurrentSection = function(nodeID){
+		var sectionNameArray = [
+			"Initial Section",
+			"Section A: Training",
+			"Section B: In a Course",
+			"Section C: In a Course",
+			"Section D: Registration Incident",
+			"Section E: Assessment Incident",
+			"Section F: Media, Appearance or Content Incident",
+			"Section G: Content Appearance Covered, Illegible or Other",
+			"Section H: Instructional Content Incorrect"
+		]
+		
+		try {
+			return sectionNameArray[Number(String(nodeID).charAt(0)) - 1];
+		} catch (e) {
+			return this.debug.log("getCurrentSection() >> encountered a problem reading the nodeID. (" + e + ")");
+		}
+	}
 	
 	return {
 		debug: {
@@ -117,7 +137,7 @@ var TREE = (function(nodes){
 			
 			navHistory = [];
 			
-			$("#mode span").html("");
+			$("#mode small").html("");
 			$("button.history-btn").removeClass("active");
 			
 			try {
@@ -175,6 +195,8 @@ var TREE = (function(nodes){
 			
 			this.debug.log("Now at " + currentNode);
 			
+			$("#mode small").html("Currently in: <b>" + getCurrentSection(currentNode) + "</b>");
+			
 			try {
 				myNode = nodes[nodeList[nodeID]];
 				$('#title span').text(myNode.text);
@@ -227,7 +249,7 @@ var TREE = (function(nodes){
 		},
 		
 		reviewHistoryNode: function(historyItem, index) {
-			$("#mode span").html("Reviewing:");
+			$("#mode small").html("Reviewing:");
 			try {
 				myNode = nodes[nodeList[historyItem[index][0]]];
 				myChoiceNum = historyItem[index][1];
