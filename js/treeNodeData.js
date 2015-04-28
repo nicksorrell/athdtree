@@ -1014,7 +1014,7 @@ var ATHDNodes =
 	{
 		id: "6.10",
 		type: "question",
-		text: "Did the test say you passed, with a passing status for the test in your record, however, your record is still in enrollments and did not go to transcript?",
+		text: "Did the test say you passed, with a passing status for the test in your record; however, your record is still in enrollments and did not go to transcript?",
 		choices: [
 			choice1 = {
 				text: "Yes",
