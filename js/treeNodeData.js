@@ -1215,7 +1215,7 @@ var ATHDNodes =
 		id: "8.0.1",
 		type: "end",
 		code: "C2A",
-		text: "Record C2A Legitibility of Text Incident"
+		text: "Record C2A Legibility of Text Incident"
 	},
 	{
 		id: "8.1",
