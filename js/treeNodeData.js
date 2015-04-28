@@ -841,7 +841,7 @@ var ATHDNodes =
 		id: "6.1.1",
 		type: "end",
 		code: "C1C",
-		text: "Record C1C Content Assessment Questoin has No Correct Answer"
+		text: "Record C1C Content Assessment Question has No Correct Answer"
 	},
 	{
 		id: "6.2",
