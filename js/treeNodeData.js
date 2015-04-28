@@ -904,7 +904,7 @@ var ATHDNodes =
 		id: "6.4.1",
 		type: "end",
 		code: "C1A",
-		text: "Record C1A Content Assessment Question has Answer Missing"
+		text: "Record C1A Content Assessment Question has Answers Missing"
 	},
 	{
 		id: "6.4.2",
@@ -1009,7 +1009,7 @@ var ATHDNodes =
 		id: "6.9.1",
 		type: "end",
 		code: "N5A",
-		text: "Record N5A Non-Content Lesson/Module Rollup Issue"
+		text: "Record N5A Non-Content Lesson/Module Roll-up Issue"
 	},
 	{
 		id: "6.10",
@@ -1030,7 +1030,7 @@ var ATHDNodes =
 		id: "6.10.1",
 		type: "end",
 		code: "N5B",
-		text: "Record N5B Non-Content Course Rollup Issue"
+		text: "Record N5B Non-Content Course Roll-up Issue"
 	},
 	{
 		id: "6.11",
@@ -1347,7 +1347,7 @@ var ATHDNodes =
 	{
 		id: "9.4",
 		type: "question",
-		text: "Did you find the course contained Personally Indentifiable Information (PII)?",
+		text: "Did you find the course contained Personally Identifiable Information (PII)?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -1363,12 +1363,12 @@ var ATHDNodes =
 		id: "9.4.1",
 		type: "end",
 		code: "C3D",
-		text: "Record C3D Personally Indentifiable Information (PII) in Courseware Incident"
+		text: "Record C3D Personally Identifiable Information (PII) in Courseware Incident"
 	},
 	{
 		id: "9.5",
 		type: "question",
-		text: "Did you find the course contained redunant and uncessary information?",
+		text: "Did you find the course contained redundant or unnecessary information?",
 		choices: [
 			choice1 = {
 				text: "Yes",
