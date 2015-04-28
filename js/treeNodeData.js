@@ -1088,7 +1088,7 @@ var ATHDNodes =
 		id: "7.1.1",
 		type: "end",
 		code: "N6A",
-		text: "Record N6A Video does not play Incident"
+		text: "Record N6A Video Does Not Play Incident"
 	},
 	{
 		id: "7.2",
@@ -1109,7 +1109,7 @@ var ATHDNodes =
 		id: "7.2.1",
 		type: "end",
 		code: "N6B",
-		text: "Record N6B Video plays improperly Incident"
+		text: "Record N6B Video Plays Improperly Incident"
 	},
 	{
 		id: "7.3",
@@ -1130,7 +1130,7 @@ var ATHDNodes =
 		id: "7.3.1",
 		type: "end",
 		code: "N6E",
-		text: "Record N6E Audio out of synch with video Incident"
+		text: "Record N6E Audio Out of Synch with Video Incident"
 	},
 	{
 		id: "7.3.2",
@@ -1172,7 +1172,7 @@ var ATHDNodes =
 		id: "7.5.1",
 		type: "end",
 		code: "N6D",
-		text: "Record N6D Audio plays improperly Incident"
+		text: "Record N6D Audio Plays Improperly Incident"
 	},
 	{
 		id: "7.6",
@@ -1193,7 +1193,7 @@ var ATHDNodes =
 		id: "7.6.1",
 		type: "end",
 		code: "N6C",
-		text: "Record N6C No Audio when expected Incident"
+		text: "Record N6C No Audio when Expected Incident"
 	},
 	//////SECTION G: Content Appearance Blocke/Illegibile/etc (8.X)//////
 	{
