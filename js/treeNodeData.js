@@ -1114,7 +1114,7 @@ var ATHDNodes =
 	{
 		id: "7.3",
 		type: "question",
-		text: "Did you encounter a video whose audio track was out of synch?",
+		text: "Did you encounter a video whose audio track was out of sync?",
 		choices: [
 			choice1 = {
 				text: "Yes",
@@ -1130,7 +1130,7 @@ var ATHDNodes =
 		id: "7.3.1",
 		type: "end",
 		code: "N6E",
-		text: "Record N6E Audio Out of Synch with Video Incident"
+		text: "Record N6E Audio Out of Sync with Video Incident"
 	},
 	{
 		id: "7.3.2",
