@@ -10,8 +10,18 @@ var TREE = (function(nodes){
 		historyIndex = 0, 
 		reviewMode = 0,
 		recordHistoryItems = 1,
-		saveHistory = 0,
+		saveHistory = 1,
 		debugMode = 0;
+		
+	var hasLocalStorage = (function(){
+		try {
+			localStorage.setItem("localStorageTest", "test");
+			localStorage.removeItem("localStorageTest");
+			return true;
+		} catch(e) {
+			return false;
+		}
+	})();
 	
 	var getChoiceType = function(choice) {
 		if(choice.text == "Yes" || choice.text == "Somewhat") {
@@ -102,9 +112,14 @@ var TREE = (function(nodes){
 		},
 
 		init: function(clearHistory) {
-			if(saveHistory) {
+			if(saveHistory && hasLocalStorage) {
 				recordHistoryItems = true;
 			}
+			
+			if(!hasLocalStorage){
+				$("#history h3").after("<p>(Storage is not enabled. History will not be saved after this window is closed.)</p>");
+			}
+			
 			for(var i = 0, numNodes = nodes.length; i < numNodes; i++) {
 				nodeList[nodes[i].id] = i;
 			}
@@ -119,7 +134,7 @@ var TREE = (function(nodes){
 			
 			if(recordHistoryItems) {
 				$("#history").css({"visibility" : "visible"});
-				if(saveHistory) {
+				if(saveHistory && hasLocalStorage) {
 					this.showSavedHistory();
 				}
 			}
@@ -308,7 +323,7 @@ var TREE = (function(nodes){
 		},
 		
 		recordHistory: function() {
-			if(saveHistory) {
+			if(saveHistory && hasLocalStorage) {
 				localStorage.setItem("history" + localStorage.length, navHistory + "," + nodes[nodeList[currentNode]].code + "," + getDateTime());
 			}
 			pastTickets.push(navHistory);
