@@ -12,6 +12,16 @@ var TREE = (function(nodes){
 		recordHistoryItems = 1,
 		saveHistory = 1,
 		debugMode = 0;
+		
+	var hasLocalStorage = (function(){
+		try {
+			localStorage.setItem("localStorageTest", "test");
+			localStorage.removeItem("localStorageTest");
+			return true;
+		} catch(e) {
+			return false;
+		}
+	})();
 	
 	var getChoiceType = function(choice) {
 		if(choice.text == "Yes" || choice.text == "Somewhat") {
@@ -33,6 +43,26 @@ var TREE = (function(nodes){
 			((timeNow.getMinutes() < 10) ? "0" : "") +timeNow.getMinutes() + ":" + 
 			((timeNow.getSeconds() < 10) ? "0" : "") + timeNow.getSeconds();
 	};
+	
+	var getCurrentSection = function(nodeID){
+		var sectionNameArray = [
+			"Initial Section",
+			"Section A: Training",
+			"Section B: In a Course",
+			"Section C: In a Course",
+			"Section D: Registration Incident",
+			"Section E: Assessment Incident",
+			"Section F: Media, Appearance or Content Incident",
+			"Section G: Content Appearance Covered, Illegible or Other",
+			"Section H: Instructional Content Incorrect"
+		]
+		
+		try {
+			return sectionNameArray[Number(String(nodeID).charAt(0)) - 1];
+		} catch (e) {
+			return this.debug.log("getCurrentSection() >> encountered a problem reading the nodeID. (" + e + ")");
+		}
+	}
 	
 	return {
 		debug: {
@@ -82,9 +112,14 @@ var TREE = (function(nodes){
 		},
 
 		init: function(clearHistory) {
-			if(saveHistory) {
+			if(saveHistory && hasLocalStorage) {
 				recordHistoryItems = true;
 			}
+			
+			if(!hasLocalStorage){
+				$("#history h3").after("<p>(Storage is not enabled. History will not be saved after this window is closed.)</p>");
+			}
+			
 			for(var i = 0, numNodes = nodes.length; i < numNodes; i++) {
 				nodeList[nodes[i].id] = i;
 			}
@@ -99,7 +134,7 @@ var TREE = (function(nodes){
 			
 			if(recordHistoryItems) {
 				$("#history").css({"visibility" : "visible"});
-				if(saveHistory) {
+				if(saveHistory && hasLocalStorage) {
 					this.showSavedHistory();
 				}
 			}
@@ -117,7 +152,7 @@ var TREE = (function(nodes){
 			
 			navHistory = [];
 			
-			$("#mode span").html("");
+			$("#mode small").html("");
 			$("button.history-btn").removeClass("active");
 			
 			try {
@@ -175,6 +210,8 @@ var TREE = (function(nodes){
 			
 			this.debug.log("Now at " + currentNode);
 			
+			$("#mode small").html("Currently in: <b>" + getCurrentSection(currentNode) + "</b>");
+			
 			try {
 				myNode = nodes[nodeList[nodeID]];
 				$('#title span').text(myNode.text);
@@ -227,7 +264,7 @@ var TREE = (function(nodes){
 		},
 		
 		reviewHistoryNode: function(historyItem, index) {
-			$("#mode span").html("Reviewing:");
+			$("#mode small").html("Reviewing:");
 			try {
 				myNode = nodes[nodeList[historyItem[index][0]]];
 				myChoiceNum = historyItem[index][1];
@@ -286,7 +323,7 @@ var TREE = (function(nodes){
 		},
 		
 		recordHistory: function() {
-			if(saveHistory) {
+			if(saveHistory && hasLocalStorage) {
 				localStorage.setItem("history" + localStorage.length, navHistory + "," + nodes[nodeList[currentNode]].code + "," + getDateTime());
 			}
 			pastTickets.push(navHistory);

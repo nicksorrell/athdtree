@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Tree Prototype</title>
+		<title>Army Distributed Learning Metrics Incident Determination Tool</title>
 		<link href='css/bootstrap.min.css' rel='stylesheet'>
 		<link href='css/tree.css' rel='stylesheet'>
 		<script src='js/jquery-1.11.2.min.js'></script>
@@ -14,14 +14,14 @@
 			<div class='row'>
 				<div class='col-xs-12'>
 					<h1 class='bottom-border'>
-						Army Distributed Learning Metrics Incident Determination
+						Army Distributed Learning Metrics Incident Determination Tool
 					</h1>
 				</div>
 			</div>
 			<div class='row'>
 				<div class='col-xs-12'>
 					<button id='start' class='btn btn-primary btn-lg'>Start</button>
-					<h2 id='mode'><span></span></h2>
+					<h2 id='mode'><small></small></h2>
 					<i id="node-icon"></i>
 					<h2 id='title'>
 						<span></span>
@@ -32,12 +32,14 @@
 		</div>
 		<div id='history' class='container text-center well well-sm shadowed'>
 			<div class='row'>
-				<h3 class='bottom-border'>
-					Incident History
-				</h3>
-				<p class="msg">No saved incidents</p>
-				<div class="container"></div>
-				<button id="clear-history" class="btn btn-default btn-sm">Clear History</button>
+				<div class='col-xs-12'>
+					<h3 class='bottom-border'>
+						Incident History
+					</h3>
+				</div>
+					<p class="msg">No saved incidents</p>
+					<div class="container"></div>
+					<button id="clear-history" class="btn btn-default btn-sm center">Clear History</button>
 			</div>
 		</div>
 		<script>
