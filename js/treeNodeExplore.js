@@ -42,14 +42,19 @@ var TREE = (function(nodes){
 			$('#current-node-branch2 h4').html("None");
 			$('#current-node-branch2 p').html("");
 			
-			if(myNode.choices.length > 0) {
-				$('#current-node-branch1 h3').html('<b>' + myNode.choices[0].targetNode + '</b>');
-				$('#current-node-branch1 h4').text("Type: " + nodes[nodeList[myNode.choices[0].targetNode]].type);
-				$('#current-node-branch1 input').attr("value", myNode.choices[0].text);
-				
-				$('#current-node-branch2 h3').html('<b>' + myNode.choices[1].targetNode + '</b>');
-				$('#current-node-branch2 h4').text("Type: " + nodes[nodeList[myNode.choices[1].targetNode]].type);
-				$('#current-node-branch2 input').attr("value", myNode.choices[1].text);
+			if(myNode.choices !== undefined){
+				if(myNode.choices.length > 0) {
+					$('#current-node-branch1 h3').html('<b>' + myNode.choices[0].targetNode + '</b>');
+					$('#current-node-branch1 h4').text("Type: " + nodes[nodeList[myNode.choices[0].targetNode]].type);
+					$('#current-node-branch1 input').attr("value", myNode.choices[0].text);
+					
+					$('#current-node-branch2 h3').html('<b>' + myNode.choices[1].targetNode + '</b>');
+					$('#current-node-branch2 h4').text("Type: " + nodes[nodeList[myNode.choices[1].targetNode]].type);
+					$('#current-node-branch2 input').attr("value", myNode.choices[1].text);
+				}
+			} else {
+				$('#current-node-branch1 input').attr("value", "");
+				$('#current-node-branch2 input').attr("value", "");
 			}
 		},
 		
