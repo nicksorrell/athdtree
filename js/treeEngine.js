@@ -2,17 +2,18 @@
 NOTE: Node data is defined in the ATHDNodes variable in treeNodeData.js
 ***********/
 var TREE = (function(nodes){
-	var navHistory = [], 
-		nodeList = {}, 
-		pastTickets = [], 
-		currentNode = "", 
-		currentHistoryItem = null, 
-		historyIndex = 0, 
+	var navHistory = [],
+		nodeList = {},
+		pastTickets = [],
+		currentNode = "",
+		currentHistoryItem = null,
+		historyIndex = 0,
 		reviewMode = 0,
+		reviewListDisplay = 1,
 		recordHistoryItems = 1,
 		saveHistory = 1,
 		debugMode = 0;
-		
+
 	var hasLocalStorage = (function(){
 		try {
 			localStorage.setItem("localStorageTest", "test");
@@ -22,7 +23,7 @@ var TREE = (function(nodes){
 			return false;
 		}
 	})();
-	
+
 	var getChoiceType = function(choice) {
 		if(choice.text == "Yes" || choice.text == "Somewhat") {
 			return 'btn-success';
@@ -33,17 +34,17 @@ var TREE = (function(nodes){
 			return "btn-default";
 		}
 	};
-	
+
 	var getDateTime = function() {
 		var timeNow = new Date();
 		return timeNow.getFullYear() + "-" +
 			((timeNow.getMonth()+1) < 10 ? "0" : "") + (timeNow.getMonth()+1) + "-" +
 			((timeNow.getDate() < 10) ? "0" : "") + timeNow.getDate() + " @ " +
-			((timeNow.getHours() < 10) ? "0" : "") + timeNow.getHours() + ":" + 
-			((timeNow.getMinutes() < 10) ? "0" : "") +timeNow.getMinutes() + ":" + 
+			((timeNow.getHours() < 10) ? "0" : "") + timeNow.getHours() + ":" +
+			((timeNow.getMinutes() < 10) ? "0" : "") +timeNow.getMinutes() + ":" +
 			((timeNow.getSeconds() < 10) ? "0" : "") + timeNow.getSeconds();
 	};
-	
+
 	var getCurrentSection = function(nodeID){
 		var sectionNameArray = [
 			"Initial Section",
@@ -56,14 +57,14 @@ var TREE = (function(nodes){
 			"Section G: Content Appearance Covered, Illegible or Other",
 			"Section H: Instructional Content Incorrect"
 		]
-		
+
 		try {
 			return sectionNameArray[Number(String(nodeID).charAt(0)) - 1];
 		} catch (e) {
 			return this.debug.log("getCurrentSection() >> encountered a problem reading the nodeID. (" + e + ")");
 		}
 	}
-	
+
 	return {
 		debug: {
 			traverse: function(){
@@ -82,7 +83,7 @@ var TREE = (function(nodes){
 					console.log("debug.traverse() >> END TRAVERSAL");
 				}
 			},
-			
+
 			getHistory: function(){
 				if(debugMode) {
 					console.log("Current navigation history:");
@@ -91,19 +92,19 @@ var TREE = (function(nodes){
 					console.log(pastTickets);
 				}
 			},
-			
+
 			getCodes: function(){
 				if(debugMode) {
 					var availableCodes = [];
 					for(var i = 0, numNodes = nodes.length; i < numNodes; i++) {
 						if(nodes[i].type == "end"){
 							availableCodes.push(nodes[i].text.slice(7, 11));
-						}					
+						}
 					}
 					return availableCodes;
 				}
 			},
-			
+
 			log: function(message) {
 				if(debugMode) {
 					console.log(message);
@@ -115,23 +116,23 @@ var TREE = (function(nodes){
 			if(saveHistory && hasLocalStorage) {
 				recordHistoryItems = true;
 			}
-			
+
 			if(!hasLocalStorage){
 				$("#history h3").after("<p>(Storage is not enabled. History will not be saved after this window is closed.)</p>");
 			}
-			
+
 			for(var i = 0, numNodes = nodes.length; i < numNodes; i++) {
 				nodeList[nodes[i].id] = i;
 			}
-			
+
 			navHistory = [];
-			
+
 			try {
-				this.displayNode("1.0");				
+				this.displayNode("1.0");
 			} catch (e) {
 				return this.debug.log("init() >> encountered a problem with the target node. (" + e + ")");
 			}
-			
+
 			if(recordHistoryItems) {
 				$("#history").css({"visibility" : "visible"});
 				if(saveHistory && hasLocalStorage) {
@@ -139,33 +140,33 @@ var TREE = (function(nodes){
 				}
 			}
 		},
-		
+
 		reset: function(clearHistory){
 			if(clearHistory) {
 				pastTickets = [];
 				$("#history .container").html("");
 				$("#history .msg").html("No saved incidents");
-				$("#clear-history").css({"display" : "none"})	
+				$("#clear-history").css({"display" : "none"})
 			} else {
 				$("#history .msg").html("");
 			}
-			
+
 			navHistory = [];
-			
+
 			$("#mode small").html("");
 			$("button.history-btn").removeClass("active");
-			
+
 			try {
-				this.displayNode("1.0");				
+				this.displayNode("1.0");
 			} catch (e) {
 				return this.debug.log("init() >> encountered a problem with the target node. (" + e + ")");
 			}
-			
+
 			$("#clear-history").css({"display" : "inline"}).on("click", function(){
 				TREE.reset(true);
 			});
 		},
-				
+
 		showSavedHistory: function() {
 			//if there are localStorageitems
 			if(localStorage.length > 0) {
@@ -182,10 +183,10 @@ var TREE = (function(nodes){
 					}
 				}
 			}
-			
+
 			if(pastTickets.length > 0) {
 				$("#history .msg").html("");
-				
+
 				//Make the clear history button clear localStorage, pastTickets, and reset the view
 				$("#clear-history").css({"display" : "inline"}).on("click", function() {
 					localStorage.clear();
@@ -193,7 +194,7 @@ var TREE = (function(nodes){
 				});
 			}
 		},
-		
+
 		goBack: function() {
 			if(navHistory.length > 0) {
 				try {
@@ -207,20 +208,20 @@ var TREE = (function(nodes){
 
 		displayNode: function(nodeID) {
 			currentNode = nodeID;
-			
+
 			this.debug.log("Now at " + currentNode);
-			
+
 			$("#mode small").html("Currently in: <b>" + getCurrentSection(currentNode) + "</b>");
-			
+
 			try {
 				myNode = nodes[nodeList[nodeID]];
 				$('#title span').text(myNode.text);
 			} catch (e) {
 				return this.debug.log("displayNode() >> couldn't read node title. (" + e + ")");
 			}
-			
+
 			$('#choices').html("");
-			
+
 			try {
 				if(myNode.type == "question") {
 					var choicesFragment = $('<p>');
@@ -241,14 +242,14 @@ var TREE = (function(nodes){
 			} catch (e) {
 				return this.debug.log("displayNode() >> couldn't display question node choices. (" + e + ")");
 			}
-			
+
 			if(navHistory.length >= 1) {
 				$('#choices').append('<button id="back" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Back</button>');
 				$('#back').click(function(){
 					TREE.goBack();
 				});
 			}
-			
+
 			if(myNode.type == "end") {
 				$('#choices').append('<button id="restart" class="btn btn-primary"><i class="glyphicon glyphicon-refresh"></i> Start Over</button>');
 				$('#node-icon').removeClass().addClass("glyphicon glyphicon-pencil");
@@ -262,76 +263,113 @@ var TREE = (function(nodes){
 				});
 			}
 		},
-		
-		reviewHistoryNode: function(historyItem, index) {
-			$("#mode small").html("Reviewing:");
-			try {
-				myNode = nodes[nodeList[historyItem[index][0]]];
-				myChoiceNum = historyItem[index][1];
-				$('#title span').text(myNode.text);
-			} catch (e) {
-				return this.debug.log("reviewHistoryNode() >> couldn't read node title. (" + e + ")");
+
+		enterReviewMode: function(historyItem, index, code, codeDate) {
+			TREE.reviewHistoryNode(historyItem, index, code, codeDate);
+			if(reviewListDisplay) {
+				TREE.createHistoryText(historyItem, index);
 			}
-			
-			$('#choices').html("");
-			
-			try {
-				if(myNode.type == "question") {
-					var choicesFragment = $('<p>');
-					for(var i = 0, numChoices = myNode.choices.length; i < numChoices; i++) {
-						if(i == myChoiceNum){
-							var choiceElement = '<button class="btn btn-lg choice-btn ' + (getChoiceType(myNode.choices[i]) == "btn-default" ? "btn-primary" : getChoiceType(myNode.choices[i])) + '" data-target="' + myNode.choices[i].targetNode + '" data-num="' + i + '" disabled>' + myNode.choices[i].text + '</button>';
-						} else {
-							var choiceElement = '<button class="btn btn-lg btn-default choice-btn data-target="' + myNode.choices[i].targetNode + '" data-num="' + i + '" disabled>' + myNode.choices[i].text + '</button>';
-						}
-						choicesFragment.append(choiceElement);
-					};
-					$('#choices').append(choicesFragment);
-					$("button.choice-btn").click(function() {
-						TREE.displayNode($(this).data("target"), $(this).data("num"));
-					});
-					$('#node-icon').removeClass().addClass("glyphicon glyphicon-question-sign");
-				} else {
-					$('#node-icon').removeClass().addClass("glyphicon glyphicon-pencil");
+		},
+
+		createHistoryText: function(historyItem, index) {
+			var count = 1;
+			var historyStr = "<table id='historyList'><thead><tr><th>Step</th><th>Text</th><th>Choice</th></tr></thead><tbody>";
+
+			for(var item in historyItem) {
+				var targetNode = historyItem[item][0];
+				var targetNodeChoice = historyItem[item][1];
+
+				try {
+					if(nodes[nodeList[targetNode]].choices !== undefined) {
+						historyStr += "<tr><td>" + count++ + "</td><td>" + nodes[nodeList[targetNode]].text + "</td>";
+						historyStr += "<td>" + nodes[nodeList[targetNode]].choices[targetNodeChoice].text + "</td></tr>";
+					} else {
+						historyStr += "<tr><td>END</td><td>" + nodes[nodeList[targetNode]].text + "</td><td>-</td></tr>";
+					}
+				} catch (e) {
+					this.debug.log("createHistoryText() >> encountered error reading choices for node " + nodes[nodeList[targetNode]] + ". (" + e + ")");
 				}
-			} catch (e) {
-				return this.debug.log("displayNode() >> couldn't display question node choices. (" + e + ")");
 			}
-			
-			if(historyIndex > 0) {
-				$('#choices').append('<button id="prev" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Back</button>');
-				$('#prev').click(function(){
-					historyIndex--;
-					TREE.reviewHistoryNode(currentHistoryItem, historyIndex);
-				});
+			historyStr += "</table>";
+			$('#exitReview').before(historyStr);
+		},
+
+		reviewHistoryNode: function(historyItem, index, code, codeDate) {
+			$("#mode small").html("Reviewing:<br>" + code + " incident (" + codeDate + ")");
+
+			$('#choices').html("");
+
+			if(reviewListDisplay) {
+				$('#title span').text("");
+				$('#node-icon').removeClass();
+
+			} else {
+				try {
+					myNode = nodes[nodeList[historyItem[index][0]]];
+					myChoiceNum = historyItem[index][1];
+					$('#title span').text(myNode.text);
+				} catch (e) {
+					return this.debug.log("reviewHistoryNode() >> couldn't read node title. (" + e + ")");
+				}
+
+				try {
+					if(myNode.type == "question") {
+						var choicesFragment = $('<p>');
+						for(var i = 0, numChoices = myNode.choices.length; i < numChoices; i++) {
+							if(i == myChoiceNum){
+								var choiceElement = '<button class="btn btn-lg choice-btn ' + (getChoiceType(myNode.choices[i]) == "btn-default" ? "btn-primary" : getChoiceType(myNode.choices[i])) + '" data-target="' + myNode.choices[i].targetNode + '" data-num="' + i + '" disabled>' + myNode.choices[i].text + '</button>';
+							} else {
+								var choiceElement = '<button class="btn btn-lg btn-default choice-btn data-target="' + myNode.choices[i].targetNode + '" data-num="' + i + '" disabled>' + myNode.choices[i].text + '</button>';
+							}
+							choicesFragment.append(choiceElement);
+						};
+						$('#choices').append(choicesFragment);
+						$("button.choice-btn").click(function() {
+							TREE.displayNode($(this).data("target"), $(this).data("num"));
+						});
+						$('#node-icon').removeClass().addClass("glyphicon glyphicon-question-sign");
+					} else {
+						$('#node-icon').removeClass().addClass("glyphicon glyphicon-pencil");
+					}
+				} catch (e) {
+					return this.debug.log("displayNode() >> couldn't display question node choices. (" + e + ")");
+				}
+
+				if(historyIndex > 0) {
+					$('#choices').append('<button id="prev" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Back</button>');
+					$('#prev').click(function(){
+						historyIndex--;
+						TREE.reviewHistoryNode(currentHistoryItem, historyIndex, code, codeDate);
+					});
+				}
+
+				if(historyIndex < (currentHistoryItem.length-1)) {
+					$('#choices').append('<button id="next" class="btn btn-default">Next <i class="glyphicon glyphicon-chevron-right"></i> </button>');
+					$('#next').click(function(){
+						historyIndex++;
+						TREE.reviewHistoryNode(currentHistoryItem, historyIndex, code, codeDate);
+					});
+				}
 			}
-			
-			if(historyIndex < (currentHistoryItem.length-1)) {
-				$('#choices').append('<button id="next" class="btn btn-default">Next <i class="glyphicon glyphicon-chevron-right"></i> </button>');
-				$('#next').click(function(){
-					historyIndex++;
-					TREE.reviewHistoryNode(currentHistoryItem, historyIndex);
-				});
-			}
-			
+
 			$('#choices').append('<br/><button id="exitReview" class="btn btn-default">Exit Review</button>');
 			$('#exitReview').click(function(){
 				reviewMode = 0;
 				TREE.reset();
 			});
-			
+
 		},
-		
+
 		recordHistory: function() {
 			if(saveHistory && hasLocalStorage) {
 				localStorage.setItem("history" + localStorage.length, navHistory + "," + nodes[nodeList[currentNode]].code + "," + getDateTime());
 			}
 			pastTickets.push(navHistory);
-			
+
 			//Add a history button (not from saved history) to the list
 			this.createHistoryButton();
 		},
-		
+
 		readStoredHistory: function(itemNum) {
 			if(localStorage.getItem("history" + itemNum) != null) {
 				var historyData = localStorage.getItem("history" + itemNum).split(",");
@@ -353,14 +391,14 @@ var TREE = (function(nodes){
 				};
 			}
 		},
-		
+
 		createHistoryButton: function(fromHistory) {
 			var historyBtnNum = (fromHistory) ? fromHistory : pastTickets.length - 1;
 			var historyBtnCode = (fromHistory) ? this.readStoredHistory(fromHistory).code : nodes[nodeList[currentNode]].code;
 			var historyBtnDateTime = (fromHistory) ? this.readStoredHistory(fromHistory).dateTime : getDateTime();
-			
+
 			var historyFragment = $("<button class='btn btn-sm btn-default history-btn' data-num=" + historyBtnNum + ">");
-			var historyButton = "<p class='lead'>" +historyBtnCode + " Incident</p><span>" + historyBtnDateTime + "</span>";
+			var historyButton = "<p class='lead'>" + historyBtnCode + " Incident</p><span>" + historyBtnDateTime + "</span>";
 			historyFragment.append(historyButton);
 			$('#history .container').append(historyFragment);
 			$('button.history-btn').click(function() {
@@ -369,7 +407,7 @@ var TREE = (function(nodes){
 				reviewMode = 1;
 				currentHistoryItem = pastTickets[$(this).data("num")];
 				historyIndex = 0;
-				TREE.reviewHistoryNode(currentHistoryItem, historyIndex);
+				TREE.enterReviewMode(currentHistoryItem, historyIndex, historyBtnCode, historyBtnDateTime);
 			});
 		}
 	};

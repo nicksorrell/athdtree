@@ -46,3 +46,34 @@ h1 {
 .well {
 	background: #fff;
 }
+
+#historyList {
+	margin: auto;
+	margin-bottom: 10px;
+}
+
+#historyList th {
+	font-weight: bold;
+}
+
+#historyList th, #historyList td {
+	text-align: left;
+	padding: 5px 15px;
+	border-bottom: 1px solid #ccc;
+}
+
+#historyList tbody tr:last-child td {
+	border-bottom: none;
+}
+
+#historyList tbody tr:nth-child(even) {
+	background: #eee;
+}
+
+#historyList tbody tr:last-child {
+	background: #ccc;
+}
+
+#historyList tbody tr:hover {
+	background: #ffdb9a;
+}
